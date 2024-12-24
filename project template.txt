@@ -1,0 +1,17 @@
+<div class="project">
+            <div class="slider">
+                <div class="slides">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                    <img src="" alt="">
+                </div>
+                <div class="navigation">
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
+                </div>
+            </div>
+            <div class="project-details">
+                <h2><a href="" target="_blank"></a></h2>
+                <p>Enter Description</p>
+            </div>
+        </div>
