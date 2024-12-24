@@ -102,34 +102,38 @@
 
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sliders = document.querySelectorAll('.slider');
+    
 
-            sliders.forEach(slider => {
-                const slides = slider.querySelector('.slides');
-                const images = slides.querySelectorAll('img');
-                const prevButton = slider.querySelector('.prev');
-                const nextButton = slider.querySelector('.next');
-                let index = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+    const sliders = document.querySelectorAll('.slider');
 
-                function updateSlider() {
-                    slides.style.transform = `translateX(-${index * 100}%)`;
-                }
+    sliders.forEach(slider => {
+        const slides = slider.querySelector('.slides');
+        const images = slides.querySelectorAll('img');
+        const prevButton = slider.querySelector('.prev');
+        const nextButton = slider.querySelector('.next');
+        let index = 0;
 
-                prevButton.addEventListener('click', () => {
-                    index = (index > 0) ? index - 1 : images.length - 1;
-                    updateSlider();
-                });
+        function updateSlider() {
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }
 
-                nextButton.addEventListener('click', () => {
-                    index = (index < images.length - 1) ? index + 1 : 0;
-                    updateSlider();
-                });
-            });
+        prevButton?.addEventListener('click', () => {
+            index = (index > 0) ? index - 1 : images.length - 1;
+            updateSlider();
         });
+
+        nextButton?.addEventListener('click', () => {
+            index = (index < images.length - 1) ? index + 1 : 0;
+            updateSlider();
+        });
+    });
+});
+
     </script>
 </head>
 <body>
+
     <header>
         <img src="vector1.png" id="vector">
         <h1>Knitting by Devan Morgan</h1>
@@ -244,17 +248,14 @@
         <div class="project">
             <div class="slider">
                 <div class="slides">
-                    <img src="knautia.jpeg" alt="" onclick="window.open('knautia.jpeg', '_blank');">
-                    
-                </div>
-                
+                    <img src="knautia.jpeg" alt="" onclick="window.open('knautia.jpeg', '_blank');">    
+                </div>    
             </div>
             <div class="project-details">
                 <h2><a href="https://www.ravelry.com/patterns/library/knautia-sweater" target="_blank">Knautia Sweater</a></h2>
                 <p>Fall 2023</p>
             </div>
         </div>
-    
         <div class="project">
             <div class="slider">
                 <div class="slides">
@@ -432,10 +433,14 @@
                 <p>2021, Modified to be larger, Red Heart Soft navy, tangerine, turquoise. Loops and threads violet.</p>
             </div>
         </div>
+        
+
     </main>
 
     <footer>
         <p>&copy; 2024 My Knitting Portfolio</p>
     </footer>
+    
+
 </body>
 </html>

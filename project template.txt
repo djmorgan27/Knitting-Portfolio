@@ -15,3 +15,37 @@
                 <p>Enter Description</p>
             </div>
         </div>
+
+
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sliders = document.querySelectorAll('.slider');
+
+            sliders.forEach(slider => {
+                const slides = slider.querySelector('.slides');
+                const images = slides.querySelectorAll('img');
+                const prevButton = slider.querySelector('.prev');
+                const nextButton = slider.querySelector('.next');
+                let index = 0;
+
+                function updateSlider() {
+                    slides.style.transform = `translateX(-${index * 100}%)`;
+                }
+
+                prevButton.addEventListener('click', () => {
+                    index = (index > 0) ? index - 1 : images.length - 1;
+                    updateSlider();
+                });
+
+                nextButton.addEventListener('click', () => {
+                    index = (index < images.length - 1) ? index + 1 : 0;
+                    updateSlider();
+                });
+            });
+        });
+    </script>
