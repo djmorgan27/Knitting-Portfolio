@@ -1,9 +1,9 @@
 <div class="project">
             <div class="slider">
                 <div class="slides">
-                    <img src="" alt="">
-                    <img src="" alt="">
-                    <img src="" alt="">
+                    <img src="" alt="" onclick="window.open('halloween.jpeg', '_blank');">
+                    <img src="" alt="" onclick="window.open('halloween.jpeg', '_blank');">
+                    <img src="" alt="" onclick="window.open('halloween.jpeg', '_blank');">
                 </div>
                 <div class="navigation">
                     <button class="prev">&#10094;</button>
