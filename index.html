@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knitting Portfolio</title>
     <style>
+        @media only screen and (max-width: 600px) {
+            .mobile {
+                width: 100%;
+                overflow-x: hidden;
+                
+            }
+                        
+        }
+        
+        
+
+
         a {
             color: #71b231;
         }
@@ -21,7 +33,7 @@
             background-color: #e34c00;
             padding: 20px;
             text-align: center;
-            width: 100%;
+            
         }
         header h1 {
             margin: 0;
@@ -88,8 +100,9 @@
         }
         footer {
             text-align: center;
+            padding: 5px;
             background-color: #e34c00;
-            position: fixed;
+            position: sticky;
             bottom: 0;
             width: 100%;
         }
@@ -133,13 +146,13 @@
     </script>
 </head>
 <body>
-
+    <div class="mobile">
     <header>
         <img src="vector1.png" id="vector">
         <h1>Knitting by Devan Morgan</h1>
         <p>A showcase of my favorite creations</p>
     </header>
-
+    
     <main class="portfolio">
         <div class="project">
             <div class="slider">
@@ -468,15 +481,17 @@
                 <h2><a href="https://fibrespace.com/2013/02/the-walt-painted-chevron-baby-blanket/" target="_blank">The Walt Painted Chevron Baby Blanket</a></h2>
                 <p>2021, Modified to be larger, Red Heart Soft navy, tangerine, turquoise. Loops and Threads violet.</p>
             </div>
+            
         </div>
-        
+        </main>
+    
 
     </main>
 
     <footer>
         <p>&copy; 2024 My Knitting Portfolio</p>
     </footer>
-    
+    </div>
 
 </body>
 </html>
