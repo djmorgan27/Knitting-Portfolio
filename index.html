@@ -1,619 +1,1126 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knitting Portfolio</title>
+    <title>Knitting by Devan Morgan — Handknit Portfolio</title>
+    <meta name="description"
+        content="A showcase of handknit projects by Devan Morgan — sweaters, cardigans, gloves, socks, blankets, and more. Patterns sourced from Ravelry, Brooklyn Tweed, and beyond.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <style>
-        @media only screen and (max-width: 600px) {
-            .mobile {
-                width: 100%;
-                overflow-x: hidden;
-                
-            }
-                        
-        }
-        
-        
+        /* ============================================================
+           DESIGN TOKENS
+        ============================================================ */
+        :root {
+            --color-bg: #f4ebe0;
+            --color-surface: #fffcf8;
+            --color-surface-alt: #f0e6d8;
+            --color-accent: #b85520;
+            --color-accent-hover: #924418;
+            --color-accent-light: #d4713a;
+            --color-text: #2a1f14;
+            --color-text-muted: #7a6352;
+            --color-hero-text: #fdf6ee;
+            --color-nav-bg: rgba(42, 28, 16, 0.97);
+            --color-link: #b85520;
 
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', system-ui, sans-serif;
 
-        a {
-            color: #71b231;
+            --radius-sm: 6px;
+            --radius: 14px;
+            --radius-lg: 20px;
+
+            --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.10), 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 40px rgba(0, 0, 0, 0.20), 0 2px 8px rgba(0, 0, 0, 0.12);
+
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        body {
-            font-family: Verdana, sans-serif;
+
+        /* ============================================================
+           RESET & BASE
+        ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
             overflow-x: hidden;
-            
+            -webkit-font-smoothing: antialiased;
         }
-        header {
-            background-color: #e34c00;
-            padding: 20px;
+
+        a {
+            color: var(--color-link);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        a:hover {
+            color: var(--color-accent-hover);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* ============================================================
+           STICKY NAV
+        ============================================================ */
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--color-nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 0 32px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .site-nav__brand {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-hero-text);
+            letter-spacing: 0.01em;
+        }
+
+        .site-nav__brand span {
+            color: var(--color-accent-light);
+        }
+
+        .site-nav__contact {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(247, 242, 237, 0.65);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: color var(--transition);
+        }
+
+        .site-nav__contact:hover {
+            color: var(--color-accent-light);
+        }
+
+        /* ============================================================
+           HERO HEADER
+        ============================================================ */
+        .hero {
+            position: relative;
+            background: linear-gradient(160deg,
+                    #3d2510 0%,
+                    #2a1a0c 40%,
+                    #33200f 70%,
+                    #261508 100%);
+            padding: 80px 24px 72px;
             text-align: center;
-            
-            
+            overflow: hidden;
         }
-        header h1 {
-            margin: 0;
+
+        /* subtle yarn-texture rings */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(196, 98, 45, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 30%, rgba(196, 98, 45, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(196, 98, 45, 0.06) 0%, transparent 50%);
+            pointer-events: none;
         }
+
+        .hero__inner {
+            position: relative;
+            z-index: 1;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .hero__logo {
+            width: 200px;
+            margin: 0 auto -10px;
+            filter: brightness(0) invert(0);
+            opacity: .5;
+        }
+
+        .hero__title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 700;
+            color: var(--color-hero-text);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero__title em {
+            color: var(--color-accent-light);
+            font-style: italic;
+        }
+
+        .hero__tagline {
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            color: rgba(247, 242, 237, 0.6);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero__divider {
+            width: 48px;
+            height: 2px;
+            background: var(--color-accent);
+            margin: 28px auto 0;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* ============================================================
+           PORTFOLIO GRID
+        ============================================================ */
+        .portfolio-section {
+            padding: 56px 24px 80px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
         .portfolio {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
         }
+
+        /* ============================================================
+           PROJECT CARD
+        ============================================================ */
         .project {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-card);
+            transition: transform var(--transition), box-shadow var(--transition);
+            /* scroll fade-in */
+            opacity: 0;
+            transform: translateY(28px);
         }
+
+        .project.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.55s ease, transform 0.55s ease, box-shadow var(--transition);
+        }
+
         .project:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
         }
+
+        /* ============================================================
+           IMAGE SLIDER
+        ============================================================ */
         .slider {
             position: relative;
             width: 100%;
             overflow: hidden;
+            aspect-ratio: 3 / 4;
+            background: #1a110a;
         }
+
         .slides {
             display: flex;
-            transition: transform 0.5s ease-in-out;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .slides img {
             width: 100%;
+            height: 100%;
             flex-shrink: 0;
-            max-height: 80%;
+            object-fit: cover;
+            cursor: zoom-in;
         }
-        
-        
+
+        /* hover overlay on slider */
+        .slider::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(28, 24, 21, 0.55) 0%, transparent 50%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .project:hover .slider::after {
+            opacity: 1;
+        }
+
+        /* nav arrows */
         .navigation {
             position: absolute;
             top: 50%;
-            width: 100%;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 2;
+            padding: 0 8px;
         }
+
         .navigation button {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            color: white;
-            padding: 10px;
+            pointer-events: all;
+            background: rgba(28, 24, 21, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f7f2ed;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             cursor: pointer;
-            
+            font-size: 0.85rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition), opacity var(--transition);
+            opacity: 0;
         }
+
+        .project:hover .navigation button {
+            opacity: 1;
+        }
+
+        .navigation button:hover {
+            background: var(--color-accent);
+            border-color: transparent;
+        }
+
+        /* dot indicators */
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            z-index: 3;
+        }
+
+        .slider-dots .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(247, 242, 237, 0.45);
+            transition: background var(--transition), transform var(--transition);
+            cursor: pointer;
+        }
+
+        .slider-dots .dot.active {
+            background: var(--color-surface);
+            transform: scale(1.3);
+        }
+
+        /* ============================================================
+           PROJECT DETAILS
+        ============================================================ */
         .project-details {
-            padding: 15px;
+            padding: 18px 20px 20px;
         }
+
         .project-details h2 {
-            margin: 0 0 10px;
-            font-size: 1.5em;
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--color-text);
+            margin-bottom: 6px;
         }
+
+        .project-details h2 a {
+            color: var(--color-text);
+            border-bottom: 1px solid transparent;
+            transition: color var(--transition), border-color var(--transition);
+        }
+
+        .project-details h2 a:hover {
+            color: var(--color-accent);
+            border-bottom-color: var(--color-accent);
+        }
+
         .project-details p {
-            margin: 0 0 15px;
+            font-size: 0.82rem;
+            color: var(--color-text-muted);
+            font-weight: 400;
+            line-height: 1.5;
         }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
         footer {
+            background: var(--color-nav-bg);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 28px 32px;
             text-align: center;
-            padding: 5px;
-            background-color: #e34c00;
-            /*position: sticky;*/
-            bottom: 0;
-            width: 100%;
         }
-        #vector {
-            width: 175px;
 
+        footer p {
+            font-size: 0.83rem;
+            color: rgba(247, 242, 237, 0.45);
+            letter-spacing: 0.02em;
         }
-        #email {
-            color: #333;
-        }
-        
-        
 
+        footer a {
+            color: var(--color-accent-light);
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f7f2ed;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 600px) {
+            .site-nav {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 56px 16px 52px;
+            }
+
+            .portfolio-section {
+                padding: 36px 14px 56px;
+            }
+
+            .portfolio {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .portfolio {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+        }
     </style>
-    <script>
-    
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const sliders = document.querySelectorAll('.slider');
-
-    sliders.forEach(slider => {
-        const slides = slider.querySelector('.slides');
-        const images = slides.querySelectorAll('img');
-        const prevButton = slider.querySelector('.prev');
-        const nextButton = slider.querySelector('.next');
-        let index = 0;
-
-        function updateSlider() {
-            slides.style.transform = `translateX(-${index * 100}%)`;
-        }
-
-        prevButton?.addEventListener('click', () => {
-            index = (index > 0) ? index - 1 : images.length - 1;
-            updateSlider();
-        });
-
-        nextButton?.addEventListener('click', () => {
-            index = (index < images.length - 1) ? index + 1 : 0;
-            updateSlider();
-        });
-    });
-});
-
-    </script>
 </head>
+
 <body>
-    <div class="mobile">
-    <header>
-        <img src="vector1.png" id="vector">
-        <h1>Knitting by Devan Morgan</h1>
-        <p>A showcase of my favorite creations</p>
+
+    <!-- ============================================================
+         STICKY NAV
+    ============================================================ -->
+    <nav class="site-nav" aria-label="Site navigation">
+        <span class="site-nav__brand">Knitting <span>by Devan Morgan</span></span>
+        <a href="mailto:info@knittingbydevan.com" class="site-nav__contact">Contact</a>
+    </nav>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <header class="hero">
+        <div class="hero__inner">
+            <img src="vector1.png" alt="Knitting by Devan Morgan logo" class="hero__logo" id="vector">
+            <h1 class="hero__title">Knitting <em>by Devan Morgan</em></h1>
+            <p class="hero__tagline">A showcase of my favorite creations</p>
+            <div class="hero__divider" aria-hidden="true"></div>
+        </div>
     </header>
-    
-    <main class="portfolio">
-<div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="this_is_fine1.jpg" alt="" onclick="window.open('this_is_fine1.jpg', '_blank');">
-                    <img src="this_is_fine2.jpg" alt="" onclick="window.open('this_is_fine2.jpg', '_blank');">
-                    <img src="this_is_fine3.JPEG" alt="" onclick="window.open('this_is_fine3.JPEG', '_blank');">
-                    <img src="this_is_fine4.JPEG" alt="" onclick="window.open('this_is_fine4.JPEG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/a-fine-sweater" target="_blank">A Fine Sweater</a></h2>
-                <p>January - March 2026, Loops & Threads Impeccable yarn</p>
-            </div>
-        </div>
 
+    <!-- ============================================================
+         PORTFOLIO GRID
+    ============================================================ -->
+    <main class="portfolio-section">
+        <div class="portfolio" id="portfolio-grid">
 
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="gloves.jpeg" alt="" onclick="window.open('gloves.jpeg', '_blank');">
-                    <img src="spun_yarn.jpeg" alt="" onclick="window.open('spun_yarn.jpeg', '_blank');">
-                    <img src="spindle.jpeg" alt="" onclick="window.open('spindle.jpeg', '_blank');">
+            <!-- A Fine Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="this_is_fine1.jpg" alt="A Fine Sweater"
+                            onclick="window.open('this_is_fine1.jpg', '_blank');">
+                        <img src="this_is_fine2.jpg" alt="A Fine Sweater"
+                            onclick="window.open('this_is_fine2.jpg', '_blank');">
+                        <img src="this_is_fine3.JPEG" alt="A Fine Sweater"
+                            onclick="window.open('this_is_fine3.JPEG', '_blank');">
+                        <img src="this_is_fine4.JPEG" alt="A Fine Sweater"
+                            onclick="window.open('this_is_fine4.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
                 </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/easy-peasy-knitted-gloves" target="_blank">Easy-Peasy Knitted Gloves</a></h2>
-                <p>January 2026, first finished object from handspun yarn!</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="scarf.jpeg" alt="" onclick="window.open('scarf.jpeg', '_blank');">
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/hatfield-scarf-the-devil-anse" target="_blank">Hatfield Scarf</a></h2>
-                <p>December 2025, Juniper Moon Farm Moonshine</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="arancardigan1.JPEG" alt="" onclick="window.open('arancardigan1.JPEG', '_blank');">
-                    <img src="arancardigan2.JPEG" alt="" onclick="window.open('arancardigan2.JPEG', '_blank');">
-                    <img src="arancardigan3.JPEG" alt="" onclick="window.open('arancardigan3.JPEG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/a-fine-sweater" target="_blank">A Fine
+                            Sweater</a></h2>
+                    <p>January – March 2026 &middot; Loops &amp; Threads Impeccable yarn</p>
                 </div>
             </div>
-            <div class="project-details">
-                <h2><a href="https://www.etsy.com/listing/477700587/vintage-mens-aran-cardigan-knitting?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=emu+aran+pattern&ref=sr_gallery-1-8&sts=1&dd=1&content_source=af8e2773-adcb-4ef0-bf6e-cbc9adbaceab%253ALT4916dd0ae3d00d63d2ad3cee827c97c1bef6c3fc&organic_search_click=1&logging_key=af8e2773-adcb-4ef0-bf6e-cbc9adbaceab%3ALT4916dd0ae3d00d63d2ad3cee827c97c1bef6c3fc" target="_blank">Vintage Mens Cardigan</a></h2>
-                <p>September - November 2025, Nua Sport Rolling Bales</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="umaro1.jpeg" alt="" onclick="window.open('umaro1.jpeg', '_blank');">
-                    <img src="umaro2.jpeg" alt="" onclick="window.open('umaro2.jpeg', '_blank');">
-                    <img src="umaro3.jpeg" alt="" onclick="window.open('umaro3.jpeg', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://brooklyntweed.com/products/umaro" target="_blank">Umaro</a></h2>
-                <p>May - September 2025, Noro Tabi #11</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="RibbonWeed2.JPEG" alt="" onclick="window.open('RibbonWeed2.JPEG', '_blank');">
-                    <img src="RibbonWeed1.JPEG" alt="" onclick="window.open('RibbonWeed1.JPEG', '_blank');">
-                    
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/ribbon-weed" target="_blank">Ribbon Weed</a></h2>
-                <p>February 2025, Red Heart All in One Flower Power, Bluebell</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="cardigan.jpeg" alt="" onclick="window.open('cardigan.jpeg', '_blank');">
-                    <img src="cardigan2.jpeg" alt="" onclick="window.open('cardigan2.jpeg', '_blank');">
-                    <img src="cardigan3.jpeg" alt="" onclick="window.open('cardigan3.jpeg', '_blank');">
-                    <img src="cardigan4.jpeg" alt="" onclick="window.open('cardigan4.jpeg', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/255-14-lang-yarns-luna" target="_blank">Lang Yarns 255-14 Cardigan</a></h2>
-                <p>January 2025, Malabrigo Rios Paris Night</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="bears.jpeg" alt="" onclick="window.open('bears.jpeg', '_blank');">
-                    <img src="bears2.jpg" alt="" onclick="window.open('bears2.jpeg', '_blank');">
-                    <img src="bears3.jpeg" alt="" onclick="window.open('bears3.jpeg', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/sancho" target="_blank">Sancho Bears</a></h2>
-                <p>Christmas 2024</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="freehand.jpg" alt="" onclick="window.open('freehand.jpg', '_blank');">
-                    <img src="freehand2.jpg" alt="" onclick="window.open('freehand2.jpg', '_blank');">
-                    
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2>Cabled Dog Sweater</h2>
-                <p>2024, self-drafted based on Arnold Jumper</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="bubbles.jpeg" alt="" onclick="window.open('bubbles.jpeg', '_blank');">
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/bubble-pup-sweater" target="_blank">Bubble Pup Sweater</a></h2>
-                <p>2024, scrap yarn</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="halloween.jpeg" alt="" onclick="window.open('halloween.jpeg', '_blank');">
-                    <img src="halloween2.jpeg" alt="" onclick="window.open('halloween2.jpeg', '_blank');">
-                    <img src="halloween3.jpeg" alt="" onclick="window.open('halloween3.jpeg', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/sabrinas-sweater-2" target="_blank">Sabrina's Sweater</a></h2>
-                <p>Halloween 2024, made with Lion Brand Basic Stitch and Concept by Katia Cotton-Merino Tweed</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="ainslie.JPEG" alt="" onclick="window.open('ainslie.JPEG', '_blank');">
-                    <img src="ainslie2.JPEG" alt="" onclick="window.open('ainslie2.JPEG', '_blank');">
-                    
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/ainslie-2" target="_blank">Ainslie Hat</a></h2>
-                <p>2024, Rowan brand yarn</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="violet.jpeg" alt="" onclick="window.open('violet.jpeg', '_blank');">
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/merrin-blanket" target="_blank">Merrin Blanket</a></h2>
-                <p>Summer 2024</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="pernille.jpeg" alt="" onclick="window.open('pernille.jpeg', '_blank');">
-                    
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.garnstudio.com/pattern.php?id=361&cid=19" target="_blank">Little Pernille</a></h2>
-                <p>Spring 2024</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="fantastitch.jpeg" alt="" onclick="window.open('fantastitch.jpeg', '_blank');">
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/fantastitch-hat" target="_blank">Fantastitch Hat</a></h2>
-                <p>2024</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="knautia.jpeg" alt="" onclick="window.open('knautia.jpeg', '_blank');">    
-                </div>    
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/knautia-sweater" target="_blank">Knautia Sweater</a></h2>
-                <p>Fall 2023</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="endeavor.jpg" alt="Endeavor" onclick="window.open('endeavor.jpg', '_blank');">
-                    <img src="endeavor2.jpeg" alt="Endeavor" onclick="window.open('endeavor2.jpeg', '_blank');">
-                    <img src="endeavor3.JPG" alt="Endeavor" onclick="window.open('endeavor3.JPG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/endeavour-sweater" target="_blank">Endeavour Sweater</a></h2>
-                <p>Fall 2023, made with Ella Rae Cashmereno Sport</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="little missy.jpeg" alt="" onclick="window.open('little missy.jpeg', '_blank');">
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.garnstudio.com/pattern.php?id=8793&cid=17" target="_blank">Little Missy by Drops</a></h2>
-                <p>Summer 2023</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="triangles.JPEG" alt="" onclick="window.open('triangles.JPEG', '_blank');">
-                    
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/painting-triangles-socks" target="_blank">Painting Triangles Socks</a></h2>
-                <p>2023</p>
-            </div>
-        </div>
-        
-        <!-- Add more projects as needed -->
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="Winter Night 1.JPG" alt="Walt" onclick="window.open('Winter Night 1.JPG', '_blank');">
-                    <img src="Winter Night 2.JPG" alt="Walt"onclick="window.open('Winter Night 2.JPG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.garnstudio.com/pattern.php?id=9987&cid=17" target="_blank">Winter's Night Enchantment by Drops</a></h2>
-                <p>2023, Juniper Moon Farms Moonshine.</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="pettyharbor.JPEG" alt="" onclick="window.open('pettyharbor.JPEG', '_blank');">
-                    
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/petty-harbour" target="_blank">Petty Harbour Socks</a></h2>
-                <p>2023, Ella Rae Cashermino Sport</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="duxbury.jpeg" alt="" onclick="window.open('duxbury.jpeg', '_blank');">
-                    <img src="duxbury2.jpeg" alt="" onclick="window.open('duxbury2.jpeg', '_blank');">
-                    
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/duxbury-point-pullover" target="_blank">Duxbury Point Pullover</a></h2>
-                <p>2023, Noro yarn</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="tractor.jpeg" alt="" onclick="window.open('tractor.jpeg', '_blank');">
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/tractor-blanky" target="_blank">Tractor Blanky</a></h2>
-                <p>2022</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="tarragon.jpeg" alt="" onclick="window.open('tarragon.jpeg', '_blank');">
-                    <img src="tarragon2.jpeg" alt="" onclick="window.open('tarragon2.jpeg', '_blank');">
-                    
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/tarragon-the-gentle-dragon" target="_blank">Tarragon the Gentle Dragon</a></h2>
-                <p>2022</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="artisan.JPEG" alt="" onclick="window.open('artisan.JPEG', '_blank');">
-                    <img src="artisan2.JPEG" alt="" onclick="window.open('artisan2.JPEG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/artisan-2" target="_blank">Artisan Gloves</a></h2>
-                <p>2022</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="easypeasy.JPEG" alt="" onclick="window.open('easypeasy.JPEG', '_blank');">
-                    
-                </div>
-                
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/easy-peasy-knitted-gloves" target="_blank">Easy-Peasy Knitted Gloves</a></h2>
-                <p>2022, Ella Rae Cashmerino Sport</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="cooper2.jpg" alt="" onclick="window.open('cooper2.jpg', '_blank');">   
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/the-arnold-jumper" target="_blank">The Arnold Jumper</a></h2>
-                <p>2022, My first dog sweater, made with Red Heart Soft Clementine and Super Saver white</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="donegal.JPEG" alt="" onclick="window.open('donegal.JPEG', '_blank');">
-                    <img src="donegal2.JPEG" alt="" onclick="window.open('donegal2.JPEG', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://www.ravelry.com/patterns/library/donegal-sweater-2" target="_blank">Donegal Sweater</a></h2>
-                <p>2022, My first sweater. </p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="Doodle.jpeg" alt="" onclick="window.open('Doodle.jpeg', '_blank');">
-                </div>
-            </div>
-            <div class="project-details">
-                <h2>Doodle socks based on <a href="https://www.ravelry.com/patterns/library/michigan-2" target="_blank">Michigan</a></h2>
-                <p>2022, scraps</p>
-            </div>
-        </div>
-        <div class="project">
-            <div class="slider">
-                <div class="slides">
-                    <img src="walt1.jpeg" alt="Walt" onclick="window.open('walt1.jpeg', '_blank');">
-                    <img src="walt2.jpeg" alt="Walt" onclick="window.open('walt2.jpeg', '_blank');">
-                </div>
-                <div class="navigation">
-                    <button class="prev">&#10094;</button>
-                    <button class="next">&#10095;</button>
-                </div>
-            </div>
-            <div class="project-details">
-                <h2><a href="https://fibrespace.com/2013/02/the-walt-painted-chevron-baby-blanket/" target="_blank">The Walt Painted Chevron Baby Blanket</a></h2>
-                <p>2021, Modified to be larger, Red Heart Soft navy, tangerine, turquoise. Loops and Threads violet.</p>
-            </div>
-            
-        </div>
-        </main>
-    
 
+            <!-- Easy-Peasy Knitted Gloves (2026) -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="gloves.jpeg" alt="Easy-Peasy Knitted Gloves"
+                            onclick="window.open('gloves.jpeg', '_blank');">
+                        <img src="spun_yarn.jpeg" alt="Handspun yarn"
+                            onclick="window.open('spun_yarn.jpeg', '_blank');">
+                        <img src="spindle.jpeg" alt="Drop spindle" onclick="window.open('spindle.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/easy-peasy-knitted-gloves"
+                            target="_blank">Easy-Peasy Knitted Gloves</a></h2>
+                    <p>January 2026 &middot; First finished object from handspun yarn!</p>
+                </div>
+            </div>
+
+            <!-- Hatfield Scarf -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="scarf.jpeg" alt="Hatfield Scarf" onclick="window.open('scarf.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/hatfield-scarf-the-devil-anse"
+                            target="_blank">Hatfield Scarf</a></h2>
+                    <p>December 2025 &middot; Juniper Moon Farm Moonshine</p>
+                </div>
+            </div>
+
+            <!-- Vintage Mens Cardigan -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="arancardigan1.JPEG" alt="Vintage Mens Aran Cardigan"
+                            onclick="window.open('arancardigan1.JPEG', '_blank');">
+                        <img src="arancardigan2.JPEG" alt="Vintage Mens Aran Cardigan"
+                            onclick="window.open('arancardigan2.JPEG', '_blank');">
+                        <img src="arancardigan3.JPEG" alt="Vintage Mens Aran Cardigan"
+                            onclick="window.open('arancardigan3.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.etsy.com/listing/477700587/vintage-mens-aran-cardigan-knitting?ls=s&ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=emu+aran+pattern&ref=sr_gallery-1-8&sts=1&dd=1&content_source=af8e2773-adcb-4ef0-bf6e-cbc9adbaceab%253ALT4916dd0ae3d00d63d2ad3cee827c97c1bef6c3fc&organic_search_click=1&logging_key=af8e2773-adcb-4ef0-bf6e-cbc9adbaceab%3ALT4916dd0ae3d00d63d2ad3cee827c97c1bef6c3fc"
+                            target="_blank">Vintage Mens Cardigan</a></h2>
+                    <p>September – November 2025 &middot; Nua Sport Rolling Bales</p>
+                </div>
+            </div>
+
+            <!-- Umaro -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="umaro1.jpeg" alt="Umaro" onclick="window.open('umaro1.jpeg', '_blank');">
+                        <img src="umaro2.jpeg" alt="Umaro" onclick="window.open('umaro2.jpeg', '_blank');">
+                        <img src="umaro3.jpeg" alt="Umaro" onclick="window.open('umaro3.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://brooklyntweed.com/products/umaro" target="_blank">Umaro</a></h2>
+                    <p>May – September 2025 &middot; Noro Tabi #11</p>
+                </div>
+            </div>
+
+            <!-- Ribbon Weed -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="RibbonWeed2.JPEG" alt="Ribbon Weed"
+                            onclick="window.open('RibbonWeed2.JPEG', '_blank');">
+                        <img src="RibbonWeed1.JPEG" alt="Ribbon Weed"
+                            onclick="window.open('RibbonWeed1.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/ribbon-weed" target="_blank">Ribbon Weed</a>
+                    </h2>
+                    <p>February 2025 &middot; Red Heart All in One Flower Power, Bluebell</p>
+                </div>
+            </div>
+
+            <!-- Lang Yarns Cardigan -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="cardigan.jpeg" alt="Lang Yarns 255-14 Cardigan"
+                            onclick="window.open('cardigan.jpeg', '_blank');">
+                        <img src="cardigan2.jpeg" alt="Lang Yarns 255-14 Cardigan"
+                            onclick="window.open('cardigan2.jpeg', '_blank');">
+                        <img src="cardigan3.jpeg" alt="Lang Yarns 255-14 Cardigan"
+                            onclick="window.open('cardigan3.jpeg', '_blank');">
+                        <img src="cardigan4.jpeg" alt="Lang Yarns 255-14 Cardigan"
+                            onclick="window.open('cardigan4.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/255-14-lang-yarns-luna" target="_blank">Lang
+                            Yarns 255-14 Cardigan</a></h2>
+                    <p>January 2025 &middot; Malabrigo Rios Paris Night</p>
+                </div>
+            </div>
+
+            <!-- Sancho Bears -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="bears.jpeg" alt="Sancho Bears" onclick="window.open('bears.jpeg', '_blank');">
+                        <img src="bears2.jpg" alt="Sancho Bears" onclick="window.open('bears2.jpg', '_blank');">
+                        <img src="bears3.jpeg" alt="Sancho Bears" onclick="window.open('bears3.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/sancho" target="_blank">Sancho Bears</a></h2>
+                    <p>Christmas 2024</p>
+                </div>
+            </div>
+
+            <!-- Cabled Dog Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="freehand.jpg" alt="Cabled Dog Sweater"
+                            onclick="window.open('freehand.jpg', '_blank');">
+                        <img src="freehand2.jpg" alt="Cabled Dog Sweater"
+                            onclick="window.open('freehand2.jpg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2>Cabled Dog Sweater</h2>
+                    <p>2024 &middot; Self-drafted, based on Arnold Jumper</p>
+                </div>
+            </div>
+
+            <!-- Bubble Pup Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="bubbles.jpeg" alt="Bubble Pup Sweater"
+                            onclick="window.open('bubbles.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/bubble-pup-sweater" target="_blank">Bubble Pup
+                            Sweater</a></h2>
+                    <p>2024 &middot; Scrap yarn</p>
+                </div>
+            </div>
+
+            <!-- Sabrina's Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="halloween.jpeg" alt="Sabrina's Sweater"
+                            onclick="window.open('halloween.jpeg', '_blank');">
+                        <img src="halloween2.jpeg" alt="Sabrina's Sweater"
+                            onclick="window.open('halloween2.jpeg', '_blank');">
+                        <img src="halloween3.jpeg" alt="Sabrina's Sweater"
+                            onclick="window.open('halloween3.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/sabrinas-sweater-2" target="_blank">Sabrina's
+                            Sweater</a></h2>
+                    <p>Halloween 2024 &middot; Lion Brand Basic Stitch &amp; Concept by Katia Cotton-Merino Tweed</p>
+                </div>
+            </div>
+
+            <!-- Ainslie Hat -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="ainslie.JPEG" alt="Ainslie Hat" onclick="window.open('ainslie.JPEG', '_blank');">
+                        <img src="ainslie2.JPEG" alt="Ainslie Hat" onclick="window.open('ainslie2.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/ainslie-2" target="_blank">Ainslie Hat</a>
+                    </h2>
+                    <p>2024 &middot; Rowan brand yarn</p>
+                </div>
+            </div>
+
+            <!-- Merrin Blanket -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="violet.jpeg" alt="Merrin Blanket" onclick="window.open('violet.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/merrin-blanket" target="_blank">Merrin
+                            Blanket</a></h2>
+                    <p>Summer 2024</p>
+                </div>
+            </div>
+
+            <!-- Little Pernille -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="pernille.jpeg" alt="Little Pernille"
+                            onclick="window.open('pernille.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.garnstudio.com/pattern.php?id=361&cid=19" target="_blank">Little
+                            Pernille</a></h2>
+                    <p>Spring 2024</p>
+                </div>
+            </div>
+
+            <!-- Fantastitch Hat -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="fantastitch.jpeg" alt="Fantastitch Hat"
+                            onclick="window.open('fantastitch.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/fantastitch-hat" target="_blank">Fantastitch
+                            Hat</a></h2>
+                    <p>2024</p>
+                </div>
+            </div>
+
+            <!-- Knautia Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="knautia.jpeg" alt="Knautia Sweater" onclick="window.open('knautia.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/knautia-sweater" target="_blank">Knautia
+                            Sweater</a></h2>
+                    <p>Fall 2023</p>
+                </div>
+            </div>
+
+            <!-- Endeavour Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="endeavor.jpg" alt="Endeavour Sweater"
+                            onclick="window.open('endeavor.jpg', '_blank');">
+                        <img src="endeavor2.jpeg" alt="Endeavour Sweater"
+                            onclick="window.open('endeavor2.jpeg', '_blank');">
+                        <img src="endeavor3.JPG" alt="Endeavour Sweater"
+                            onclick="window.open('endeavor3.JPG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/endeavour-sweater" target="_blank">Endeavour
+                            Sweater</a></h2>
+                    <p>Fall 2023 &middot; Ella Rae Cashmereno Sport</p>
+                </div>
+            </div>
+
+            <!-- Little Missy -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="little missy.jpeg" alt="Little Missy by Drops"
+                            onclick="window.open('little missy.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.garnstudio.com/pattern.php?id=8793&cid=17" target="_blank">Little Missy by
+                            Drops</a></h2>
+                    <p>Summer 2023</p>
+                </div>
+            </div>
+
+            <!-- Painting Triangles Socks -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="triangles.jpeg" alt="Painting Triangles Socks"
+                            onclick="window.open('triangles.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/painting-triangles-socks"
+                            target="_blank">Painting Triangles Socks</a></h2>
+                    <p>2023</p>
+                </div>
+            </div>
+
+            <!-- Winter's Night Enchantment -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="Winter Night 1.JPG" alt="Winter's Night Enchantment by Drops"
+                            onclick="window.open('Winter Night 1.JPG', '_blank');">
+                        <img src="Winter Night 2.JPG" alt="Winter's Night Enchantment by Drops"
+                            onclick="window.open('Winter Night 2.JPG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.garnstudio.com/pattern.php?id=9987&cid=17" target="_blank">Winter's Night
+                            Enchantment by Drops</a></h2>
+                    <p>2023 &middot; Juniper Moon Farms Moonshine</p>
+                </div>
+            </div>
+
+            <!-- Petty Harbour Socks -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="pettyharbor.JPEG" alt="Petty Harbour Socks"
+                            onclick="window.open('pettyharbor.JPEG', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/petty-harbour" target="_blank">Petty Harbour
+                            Socks</a></h2>
+                    <p>2023 &middot; Ella Rae Cashmerino Sport</p>
+                </div>
+            </div>
+
+            <!-- Duxbury Point Pullover -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="duxbury.jpeg" alt="Duxbury Point Pullover"
+                            onclick="window.open('duxbury.jpeg', '_blank');">
+                        <img src="duxbury2.jpeg" alt="Duxbury Point Pullover"
+                            onclick="window.open('duxbury2.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/duxbury-point-pullover"
+                            target="_blank">Duxbury Point Pullover</a></h2>
+                    <p>2023 &middot; Noro yarn</p>
+                </div>
+            </div>
+
+            <!-- Tractor Blanky -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="tractor.jpeg" alt="Tractor Blanky" onclick="window.open('tractor.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/tractor-blanky" target="_blank">Tractor
+                            Blanky</a></h2>
+                    <p>2022</p>
+                </div>
+            </div>
+
+            <!-- Tarragon the Gentle Dragon -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="tarragon.jpeg" alt="Tarragon the Gentle Dragon"
+                            onclick="window.open('tarragon.jpeg', '_blank');">
+                        <img src="tarragon2.jpeg" alt="Tarragon the Gentle Dragon"
+                            onclick="window.open('tarragon2.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/tarragon-the-gentle-dragon"
+                            target="_blank">Tarragon the Gentle Dragon</a></h2>
+                    <p>2022</p>
+                </div>
+            </div>
+
+            <!-- Artisan Gloves -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="artisan.JPEG" alt="Artisan Gloves" onclick="window.open('artisan.JPEG', '_blank');">
+                        <img src="artisan2.JPEG" alt="Artisan Gloves" onclick="window.open('artisan2.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/artisan-2" target="_blank">Artisan Gloves</a>
+                    </h2>
+                    <p>2022</p>
+                </div>
+            </div>
+
+            <!-- Easy-Peasy Knitted Gloves (2022) -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="easypeasy.JPEG" alt="Easy-Peasy Knitted Gloves"
+                            onclick="window.open('easypeasy.JPEG', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/easy-peasy-knitted-gloves"
+                            target="_blank">Easy-Peasy Knitted Gloves</a></h2>
+                    <p>2022 &middot; Ella Rae Cashmerino Sport</p>
+                </div>
+            </div>
+
+            <!-- The Arnold Jumper -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="cooper2.jpg" alt="The Arnold Jumper" onclick="window.open('cooper2.jpg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/the-arnold-jumper" target="_blank">The Arnold
+                            Jumper</a></h2>
+                    <p>2022 &middot; First dog sweater &middot; Red Heart Soft Clementine &amp; Super Saver White</p>
+                </div>
+            </div>
+
+            <!-- Donegal Sweater -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="donegal.JPEG" alt="Donegal Sweater" onclick="window.open('donegal.JPEG', '_blank');">
+                        <img src="donegal2.JPEG" alt="Donegal Sweater"
+                            onclick="window.open('donegal2.JPEG', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://www.ravelry.com/patterns/library/donegal-sweater-2" target="_blank">Donegal
+                            Sweater</a></h2>
+                    <p>2022 &middot; My first sweater</p>
+                </div>
+            </div>
+
+            <!-- Doodle Socks -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="Doodle.jpeg" alt="Doodle Socks" onclick="window.open('Doodle.jpeg', '_blank');">
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2>Doodle Socks based on <a href="https://www.ravelry.com/patterns/library/michigan-2"
+                            target="_blank">Michigan</a></h2>
+                    <p>2022 &middot; Scraps</p>
+                </div>
+            </div>
+
+            <!-- Walt Painted Chevron Baby Blanket -->
+            <div class="project">
+                <div class="slider">
+                    <div class="slides">
+                        <img src="walt1.jpeg" alt="The Walt Painted Chevron Baby Blanket"
+                            onclick="window.open('walt1.jpeg', '_blank');">
+                        <img src="walt2.jpeg" alt="The Walt Painted Chevron Baby Blanket"
+                            onclick="window.open('walt2.jpeg', '_blank');">
+                    </div>
+                    <div class="navigation">
+                        <button class="prev" aria-label="Previous image">&#10094;</button>
+                        <button class="next" aria-label="Next image">&#10095;</button>
+                    </div>
+                    <div class="slider-dots"></div>
+                </div>
+                <div class="project-details">
+                    <h2><a href="https://fibrespace.com/2013/02/the-walt-painted-chevron-baby-blanket/"
+                            target="_blank">The Walt Painted Chevron Baby Blanket</a></h2>
+                    <p>2021 &middot; Modified to be larger &middot; Red Heart Soft navy, tangerine &amp; turquoise;
+                        Loops and Threads violet</p>
+                </div>
+            </div>
+
+        </div><!-- /.portfolio -->
     </main>
 
+    <!-- ============================================================
+         FOOTER
+    ============================================================ -->
     <footer>
-        <p>Contact: <a href= "mailto:info@knittingbydevan.com"  id="email">info@knittingbydevan.com</a></p>
-        
+        <p>Contact: <a href="mailto:info@knittingbydevan.com" id="email">info@knittingbydevan.com</a></p>
     </footer>
-    </div>
+
+    <!-- ============================================================
+         JAVASCRIPT
+    ============================================================ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* ----------------------------------------------------------
+               SLIDER LOGIC (arrows + dots)
+            ---------------------------------------------------------- */
+            document.querySelectorAll('.slider').forEach(slider => {
+                const slides = slider.querySelector('.slides');
+                const images = slides.querySelectorAll('img');
+                const prevBtn = slider.querySelector('.prev');
+                const nextBtn = slider.querySelector('.next');
+                const dotsWrap = slider.querySelector('.slider-dots');
+                let index = 0;
+
+                // Build dots
+                images.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => goTo(i));
+                    dotsWrap.appendChild(dot);
+                });
+
+                // Hide dots if only one image
+                if (images.length <= 1) {
+                    dotsWrap.style.display = 'none';
+                }
+
+                const dots = dotsWrap.querySelectorAll('.dot');
+
+                function goTo(n) {
+                    index = (n + images.length) % images.length;
+                    slides.style.transform = `translateX(-${index * 100}%)`;
+                    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                }
+
+                prevBtn?.addEventListener('click', () => goTo(index - 1));
+                nextBtn?.addEventListener('click', () => goTo(index + 1));
+            });
+
+            /* ----------------------------------------------------------
+               SCROLL FADE-IN (Intersection Observer)
+            ---------------------------------------------------------- */
+            const cards = document.querySelectorAll('.project');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        // stagger delay based on card position in a row of ~3
+                        const col = Array.from(cards).indexOf(entry.target) % 3;
+                        entry.target.style.transitionDelay = `${col * 60}ms`;
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
 
 </body>
+
 </html>
